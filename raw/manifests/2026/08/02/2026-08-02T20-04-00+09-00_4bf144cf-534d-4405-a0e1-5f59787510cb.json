@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "run_manifest",
+  "run_id": "4bf144cf-534d-4405-a0e1-5f59787510cb",
+  "phase": "manual",
+  "run_type": "ranking_score",
+  "scheduled_at": "2026-08-02T20:04:00+09:00",
+  "started_at": "2026-08-02T20:04:00+09:00",
+  "finished_at": "2026-08-02T20:07:00+09:00",
+  "status": "success",
+  "expected_targets": 10,
+  "attempted_targets": 10,
+  "successful_targets": 10,
+  "failed_targets": 0,
+  "files": [
+    {
+      "path": "raw/rankings/2026/08/02/score_2026-08-02T20-04-00+09-00_4bf144cf-534d-4405-a0e1-5f59787510cb.jsonl",
+      "sha256": "059e6fe3e160d4ba42d6f1952403d69a63f66b72cbb6f782e470e645b8fc077f",
+      "record_type": "minecraft_jp_ranking",
+      "record_count": 10
+    }
+  ],
+  "collector": {
+    "name": "chatgpt-manual-web-collection",
+    "version": "1.0.0-trial",
+    "execution_environment": "ChatGPT web retrieval; direct Minecraft Server List Ping unavailable"
+  },
+  "notes": "One-time manual trial authorized by the repository owner. Source: https://minecraft.jp/servers/score. Top 10 score entries only; no scheduling and no direct server ping."
+}
