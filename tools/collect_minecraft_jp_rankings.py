@@ -38,6 +38,27 @@ def sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def preflight_hash(body: bytes, specification: dict[str, Any]) -> str:
+    mode = specification.get("hash_mode", "raw")
+    if mode == "raw":
+        return sha256_bytes(body)
+    if mode == "text_selector":
+        selector = specification.get("selector")
+        if not isinstance(selector, str) or not selector:
+            raise CollectionError("text_selector preflight requires a selector")
+        soup = BeautifulSoup(body, "html.parser")
+        node = soup.select_one(selector)
+        if node is None:
+            raise CollectionError(f"preflight selector was not found: {selector}")
+        normalized = "\n".join(
+            line.strip()
+            for line in node.get_text("\n").splitlines()
+            if line.strip()
+        )
+        return sha256_bytes(normalized.encode("utf-8"))
+    raise CollectionError(f"unsupported preflight hash mode: {mode}")
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -82,8 +103,7 @@ def parse_ranking_html(
     index = 0
     while index < len(rows):
         info_row = rows[index]
-        classes = set(info_row.get("class") or [])
-        if "row-info" not in classes:
+        if "row-info" not in set(info_row.get("class") or []):
             index += 1
             continue
 
@@ -132,7 +152,7 @@ def parse_ranking_html(
         uptime_match = re.search(r"(\d+(?:\.\d+)?)\s*%", uptime_cell.get_text(" ", strip=True))
         availability_ratio = float(uptime_match.group(1)) / 100 if uptime_match else None
 
-        tags = []
+        tags: list[str] = []
         if tags_row is not None:
             tags = unique_preserving_order(
                 [
@@ -287,7 +307,7 @@ def collect(
     for name in ("robots", "terms"):
         specification = config["preflight"][name]
         body = fetcher.fetch(specification["url"])
-        actual_hash = sha256_bytes(body)
+        actual_hash = preflight_hash(body, specification)
         if actual_hash != specification["expected_sha256"]:
             raise CollectionError(
                 f"{name} content changed since approval: expected "
