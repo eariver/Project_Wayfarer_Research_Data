@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+trial_id: manual-score-top10-2026-08-02
+authorized_by: repository-owner
+authorization_context: "One-time manual trial requested in Project Wayfarer planning chat"
+status: completed
+phase: manual
+scheduled: false
+captured_at: "2026-08-02T20:04:00+09:00"
+run_id: "4bf144cf-534d-4405-a0e1-5f59787510cb"
+source:
+  name: minecraft.jp
+  url: https://minecraft.jp/servers/score
+scope:
+  ranking_type: score
+  ranks: "1-10"
+  direct_server_ping: false
+  reason_direct_ping_disabled: "Execution environment cannot perform outbound DNS/socket access"
+collector:
+  name: chatgpt-manual-web-collection
+  version: 1.0.0-trial
+notes:
+  - This trial does not authorize recurring or scheduled production collection.
+  - Listed values were preserved as observed from the public score ranking page.
+  - Human interpretation is outside this repository's automated processing.
