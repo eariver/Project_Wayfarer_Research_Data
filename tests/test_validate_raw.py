@@ -79,19 +79,33 @@ class ValidateRawTests(unittest.TestCase):
                 record,
             )
 
-    def test_ranking_player_count_above_maximum_is_rejected(self) -> None:
+    def test_ranking_player_count_above_listed_maximum_is_preserved(self) -> None:
         record = {
             "record_type": "minecraft_jp_ranking",
-            "players_online": 11,
-            "players_max": 10,
+            "players_online": 65,
+            "players_max": 0,
+        }
+
+        validate_cross_field_invariants(
+            Path("samples/ranking.jsonl"),
+            1,
+            record,
+        )
+
+    def test_direct_ping_player_count_above_maximum_is_rejected(self) -> None:
+        record = {
+            "record_type": "server_ping",
+            "result": "success",
+            "online_players": 11,
+            "max_players": 10,
         }
 
         with self.assertRaisesRegex(
             RepositoryValidationError,
-            "players_online",
+            "online_players",
         ):
             validate_cross_field_invariants(
-                Path("samples/ranking.jsonl"),
+                Path("samples/server-ping.jsonl"),
                 1,
                 record,
             )
