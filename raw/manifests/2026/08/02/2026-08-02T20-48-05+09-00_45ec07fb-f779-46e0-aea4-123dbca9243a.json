@@ -1,0 +1,41 @@
+{
+  "attempted_targets": 70,
+  "collector": {
+    "execution_environment": "GitHub-hosted Actions runner; sequential public HTTPS retrieval",
+    "name": "github-actions-manual-minecraft-jp-ranking-collector",
+    "version": "1.0.0-trial"
+  },
+  "expected_targets": 70,
+  "failed_targets": 0,
+  "files": [
+    {
+      "path": "raw/rankings/2026/08/02/score_2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.jsonl",
+      "record_count": 30,
+      "record_type": "minecraft_jp_ranking",
+      "sha256": "9be9be957f8ea456189b1cb3d859597c40d94d11f8beeb72ab95a80cbd818905"
+    },
+    {
+      "path": "raw/rankings/2026/08/02/player_2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.jsonl",
+      "record_count": 20,
+      "record_type": "minecraft_jp_ranking",
+      "sha256": "a329780f145d5341b03a7ef42d5aecd645c41ca3b3accb9ae46f792499848fa6"
+    },
+    {
+      "path": "raw/rankings/2026/08/02/recent_2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.jsonl",
+      "record_count": 20,
+      "record_type": "minecraft_jp_ranking",
+      "sha256": "b952ac9a040bae10e6df10925e7128d8df2eb8f196c380db93235f55d273e877"
+    }
+  ],
+  "finished_at": "2026-08-02T20:48:13+09:00",
+  "notes": "One-time expanded manual trial manual-expanded-rankings-2026-08-02. No direct Server List Ping. Preflight robots=8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b terms=eaf7f25eb6b95c2fa4804d73057f8ced6df6c6478846490817bc6231522fc041. Sources: https://minecraft.jp/servers/score, https://minecraft.jp/servers/score/page:2, https://minecraft.jp/servers/player, https://minecraft.jp/servers/recent",
+  "phase": "manual",
+  "record_type": "run_manifest",
+  "run_id": "45ec07fb-f779-46e0-aea4-123dbca9243a",
+  "run_type": "mixed",
+  "scheduled_at": "2026-08-02T20:17:00+09:00",
+  "schema_version": "1.0.0",
+  "started_at": "2026-08-02T20:48:05+09:00",
+  "status": "success",
+  "successful_targets": 70
+}
