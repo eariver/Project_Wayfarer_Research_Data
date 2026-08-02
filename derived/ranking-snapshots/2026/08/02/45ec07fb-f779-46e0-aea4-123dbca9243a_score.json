@@ -1,0 +1,167 @@
+{
+  "captured_at_max": "2026-08-02T20:48:05+09:00",
+  "captured_at_min": "2026-08-02T20:48:05+09:00",
+  "derived_type": "ranking_snapshot_summary",
+  "max_players_online": {
+    "display_name": "まんじゅうサーバー  (Man10 Server)",
+    "listing_id": "dan5.red",
+    "players_online": 136,
+    "rank": 1,
+    "server_id": null
+  },
+  "mean_availability_ratio": 0.990333,
+  "mean_players_online": 22.7,
+  "mean_score": 833.96,
+  "median_players_online": 8,
+  "ranking_type": "score",
+  "record_count": 30,
+  "records_with_players": 30,
+  "run_id": "45ec07fb-f779-46e0-aea4-123dbca9243a",
+  "schema_version": "1.0.0",
+  "source_files": [
+    "raw/rankings/2026/08/02/score_2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.jsonl"
+  ],
+  "tag_counts": [
+    {
+      "count": 28,
+      "tag": "サバイバル"
+    },
+    {
+      "count": 16,
+      "tag": "経済"
+    },
+    {
+      "count": 11,
+      "tag": "クリエイティブ"
+    },
+    {
+      "count": 11,
+      "tag": "ミニゲーム"
+    },
+    {
+      "count": 10,
+      "tag": "PvP"
+    },
+    {
+      "count": 7,
+      "tag": "火器"
+    },
+    {
+      "count": 5,
+      "tag": "RPG"
+    },
+    {
+      "count": 5,
+      "tag": "パルクール"
+    },
+    {
+      "count": 2,
+      "tag": "ホワイトリスト"
+    }
+  ],
+  "top_by_rank": [
+    {
+      "display_name": "まんじゅうサーバー  (Man10 Server)",
+      "listing_id": "dan5.red",
+      "players_max": 888,
+      "players_online": 136,
+      "rank": 1,
+      "score": 2341.1,
+      "server_id": null,
+      "votes_30d": 6069
+    },
+    {
+      "display_name": "アジ鯖",
+      "listing_id": "mc.azisaba.net",
+      "players_max": 2026,
+      "players_online": 85,
+      "rank": 2,
+      "score": 1613.9,
+      "server_id": null,
+      "votes_30d": 3477
+    },
+    {
+      "display_name": "まんまみーや (まみや鯖)",
+      "listing_id": "play.manmamiya.work",
+      "players_max": 90,
+      "players_online": 51,
+      "rank": 3,
+      "score": 1532.2,
+      "server_id": null,
+      "votes_30d": 2413
+    },
+    {
+      "display_name": "できたてサーバー（猫）",
+      "listing_id": "dekitateserver.com",
+      "players_max": 200,
+      "players_online": 48,
+      "rank": 4,
+      "score": 1299.2,
+      "server_id": null,
+      "votes_30d": 1606
+    },
+    {
+      "display_name": "整地鯖(seichi.click network)",
+      "listing_id": "play.seichi.click",
+      "players_max": 256,
+      "players_online": 21,
+      "rank": 5,
+      "score": 1238.0,
+      "server_id": null,
+      "votes_30d": 1354
+    },
+    {
+      "display_name": "朱サバ",
+      "listing_id": "5382f96f4ddda109d00041a8",
+      "players_max": 200,
+      "players_online": 12,
+      "rank": 6,
+      "score": 1174.1,
+      "server_id": null,
+      "votes_30d": 1172
+    },
+    {
+      "display_name": "EXR-Network",
+      "listing_id": "mc.eximradar.jp",
+      "players_max": 200,
+      "players_online": 40,
+      "rank": 7,
+      "score": 1042.6,
+      "server_id": null,
+      "votes_30d": 760
+    },
+    {
+      "display_name": "Nekozouneko Server",
+      "listing_id": "nekozouneko.net",
+      "players_max": 2026,
+      "players_online": 124,
+      "rank": 8,
+      "score": 924.1,
+      "server_id": null,
+      "votes_30d": 995
+    },
+    {
+      "display_name": "もりのパーティ！",
+      "listing_id": "visit.morino.party",
+      "players_max": 2025,
+      "players_online": 12,
+      "rank": 9,
+      "score": 907.8,
+      "server_id": null,
+      "votes_30d": 1005
+    },
+    {
+      "display_name": "ごろごろ鯖",
+      "listing_id": "gorogoro.space",
+      "players_max": 40,
+      "players_online": 8,
+      "rank": 10,
+      "score": 881.0,
+      "server_id": null,
+      "votes_30d": 559
+    }
+  ],
+  "total_listed_capacity": 14405,
+  "total_players_online": 681,
+  "total_votes_30d": 23404
+}

@@ -1,0 +1,171 @@
+{
+  "captured_at_max": "2026-08-02T20:48:05+09:00",
+  "captured_at_min": "2026-08-02T20:48:05+09:00",
+  "derived_type": "ranking_snapshot_summary",
+  "max_players_online": {
+    "display_name": "ja.awayserver.com",
+    "listing_id": "ja.awayserver.com",
+    "players_online": 65,
+    "rank": 4,
+    "server_id": null
+  },
+  "mean_availability_ratio": 0.9885,
+  "mean_players_online": 5.65,
+  "mean_score": 123.31,
+  "median_players_online": 1.5,
+  "ranking_type": "recent",
+  "record_count": 20,
+  "records_with_players": 20,
+  "run_id": "45ec07fb-f779-46e0-aea4-123dbca9243a",
+  "schema_version": "1.0.0",
+  "source_files": [
+    "raw/rankings/2026/08/02/recent_2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.jsonl"
+  ],
+  "tag_counts": [
+    {
+      "count": 13,
+      "tag": "サバイバル"
+    },
+    {
+      "count": 9,
+      "tag": "経済"
+    },
+    {
+      "count": 7,
+      "tag": "ミニゲーム"
+    },
+    {
+      "count": 5,
+      "tag": "PvP"
+    },
+    {
+      "count": 4,
+      "tag": "RPG"
+    },
+    {
+      "count": 3,
+      "tag": "クリエイティブ"
+    },
+    {
+      "count": 3,
+      "tag": "ホワイトリスト"
+    },
+    {
+      "count": 3,
+      "tag": "火器"
+    },
+    {
+      "count": 2,
+      "tag": "パルクール"
+    },
+    {
+      "count": 1,
+      "tag": "要クライアントMOD"
+    }
+  ],
+  "top_by_rank": [
+    {
+      "display_name": "HavenMC",
+      "listing_id": "play.havenmc.jp",
+      "players_max": 65535,
+      "players_online": 3,
+      "rank": 1,
+      "score": 95.6,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "kinoko.ddns.net",
+      "listing_id": "play.kinokoroom.net",
+      "players_max": 1113,
+      "players_online": 1,
+      "rank": 2,
+      "score": 96.3,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "WSV-Minecraft",
+      "listing_id": "mc.willserver.asia",
+      "players_max": 20,
+      "players_online": 0,
+      "rank": 3,
+      "score": 96.5,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "ja.awayserver.com",
+      "listing_id": "ja.awayserver.com",
+      "players_max": 0,
+      "players_online": 65,
+      "rank": 4,
+      "score": 96.6,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "いねさば",
+      "listing_id": "67de4f4ce22bc84120000007",
+      "players_max": 20,
+      "players_online": 4,
+      "rank": 5,
+      "score": 106.7,
+      "server_id": null,
+      "votes_30d": 17
+    },
+    {
+      "display_name": "マイクラ角鯖",
+      "listing_id": "67bdf748e22bc8f907000000",
+      "players_max": 128,
+      "players_online": 4,
+      "rank": 6,
+      "score": 233.4,
+      "server_id": null,
+      "votes_30d": 63
+    },
+    {
+      "display_name": "のぶ鯖",
+      "listing_id": "67b05474be10dae366000000",
+      "players_max": 200,
+      "players_online": 1,
+      "rank": 7,
+      "score": 90.3,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "Aceserver",
+      "listing_id": "mc.acecore.net",
+      "players_max": 500,
+      "players_online": 4,
+      "rank": 8,
+      "score": 98.9,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "マリンセス鯖",
+      "listing_id": "mc.marincess.net",
+      "players_max": 50,
+      "players_online": 3,
+      "rank": 9,
+      "score": 109.4,
+      "server_id": null,
+      "votes_30d": 19
+    },
+    {
+      "display_name": "はぴ鯖",
+      "listing_id": "www.hapicraft.jp",
+      "players_max": 50,
+      "players_online": 1,
+      "rank": 10,
+      "score": 99.5,
+      "server_id": null,
+      "votes_30d": 0
+    }
+  ],
+  "total_listed_capacity": 80890,
+  "total_players_online": 113,
+  "total_votes_30d": 469
+}

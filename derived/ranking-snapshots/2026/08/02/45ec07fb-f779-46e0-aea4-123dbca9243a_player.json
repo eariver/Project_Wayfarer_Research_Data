@@ -1,0 +1,167 @@
+{
+  "captured_at_max": "2026-08-02T20:48:05+09:00",
+  "captured_at_min": "2026-08-02T20:48:05+09:00",
+  "derived_type": "ranking_snapshot_summary",
+  "max_players_online": {
+    "display_name": "Universal Minecraft Studios Server",
+    "listing_id": "play.umcstudios.com",
+    "players_online": 143,
+    "rank": 1,
+    "server_id": null
+  },
+  "mean_availability_ratio": 0.9895,
+  "mean_players_online": 48.7,
+  "mean_score": 824.845,
+  "median_players_online": 30.5,
+  "ranking_type": "player",
+  "record_count": 20,
+  "records_with_players": 20,
+  "run_id": "45ec07fb-f779-46e0-aea4-123dbca9243a",
+  "schema_version": "1.0.0",
+  "source_files": [
+    "raw/rankings/2026/08/02/player_2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.jsonl"
+  ],
+  "tag_counts": [
+    {
+      "count": 17,
+      "tag": "サバイバル"
+    },
+    {
+      "count": 11,
+      "tag": "ミニゲーム"
+    },
+    {
+      "count": 11,
+      "tag": "経済"
+    },
+    {
+      "count": 8,
+      "tag": "クリエイティブ"
+    },
+    {
+      "count": 6,
+      "tag": "PvP"
+    },
+    {
+      "count": 4,
+      "tag": "パルクール"
+    },
+    {
+      "count": 4,
+      "tag": "火器"
+    },
+    {
+      "count": 3,
+      "tag": "RPG"
+    },
+    {
+      "count": 1,
+      "tag": "ホワイトリスト"
+    }
+  ],
+  "top_by_rank": [
+    {
+      "display_name": "Universal Minecraft Studios Server",
+      "listing_id": "play.umcstudios.com",
+      "players_max": 1000,
+      "players_online": 143,
+      "rank": 1,
+      "score": 276.7,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "まんじゅうサーバー  (Man10 Server)",
+      "listing_id": "dan5.red",
+      "players_max": 888,
+      "players_online": 136,
+      "rank": 2,
+      "score": 2341.1,
+      "server_id": null,
+      "votes_30d": 6069
+    },
+    {
+      "display_name": "Nekozouneko Server",
+      "listing_id": "nekozouneko.net",
+      "players_max": 2026,
+      "players_online": 124,
+      "rank": 3,
+      "score": 924.1,
+      "server_id": null,
+      "votes_30d": 995
+    },
+    {
+      "display_name": "アジ鯖",
+      "listing_id": "mc.azisaba.net",
+      "players_max": 2026,
+      "players_online": 85,
+      "rank": 4,
+      "score": 1613.9,
+      "server_id": null,
+      "votes_30d": 3477
+    },
+    {
+      "display_name": "24san.org",
+      "listing_id": "24san.org",
+      "players_max": 243,
+      "players_online": 66,
+      "rank": 5,
+      "score": 153.6,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "ja.awayserver.com",
+      "listing_id": "ja.awayserver.com",
+      "players_max": 0,
+      "players_online": 65,
+      "rank": 6,
+      "score": 96.6,
+      "server_id": null,
+      "votes_30d": 0
+    },
+    {
+      "display_name": "まんまみーや (まみや鯖)",
+      "listing_id": "play.manmamiya.work",
+      "players_max": 90,
+      "players_online": 51,
+      "rank": 7,
+      "score": 1532.2,
+      "server_id": null,
+      "votes_30d": 2413
+    },
+    {
+      "display_name": "できたてサーバー（猫）",
+      "listing_id": "dekitateserver.com",
+      "players_max": 200,
+      "players_online": 48,
+      "rank": 8,
+      "score": 1299.2,
+      "server_id": null,
+      "votes_30d": 1606
+    },
+    {
+      "display_name": "EXR-Network",
+      "listing_id": "mc.eximradar.jp",
+      "players_max": 200,
+      "players_online": 40,
+      "rank": 9,
+      "score": 1042.6,
+      "server_id": null,
+      "votes_30d": 760
+    },
+    {
+      "display_name": "Rezxis Network",
+      "listing_id": "play.rezxis.net",
+      "players_max": 500,
+      "players_online": 37,
+      "rank": 10,
+      "score": 423.7,
+      "server_id": null,
+      "votes_30d": 35
+    }
+  ],
+  "total_listed_capacity": 13970,
+  "total_players_online": 974,
+  "total_votes_30d": 20477
+}

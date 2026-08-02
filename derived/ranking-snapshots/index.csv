@@ -1,2 +1,5 @@
 run_id,ranking_type,captured_at_min,captured_at_max,record_count,records_with_players,total_players_online,mean_players_online,median_players_online,total_listed_capacity,mean_score,total_votes_30d,mean_availability_ratio
+45ec07fb-f779-46e0-aea4-123dbca9243a,player,2026-08-02T20:48:05+09:00,2026-08-02T20:48:05+09:00,20,20,974,48.7,30.5,13970,824.845,20477,0.9895
+45ec07fb-f779-46e0-aea4-123dbca9243a,recent,2026-08-02T20:48:05+09:00,2026-08-02T20:48:05+09:00,20,20,113,5.65,1.5,80890,123.31,469,0.9885
+45ec07fb-f779-46e0-aea4-123dbca9243a,score,2026-08-02T20:48:05+09:00,2026-08-02T20:48:05+09:00,30,30,681,22.7,8,14405,833.96,23404,0.990333
 4bf144cf-534d-4405-a0e1-5f59787510cb,score,2026-08-02T20:04:00+09:00,2026-08-02T20:04:00+09:00,10,10,415,41.5,34.5,7951,1295.4,19410,0.987
