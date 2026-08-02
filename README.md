@@ -2,6 +2,14 @@
 
 Public raw and derived data for Minecraft server market research supporting [Project Wayfarer](https://github.com/eariver/Project_Wayfarer).
 
+## Luna Max entry point
+
+Luna Max must start collector implementation and scheduled acquisition work from:
+
+- [`LUNA_MAX_DATA_COLLECTION_RUNBOOK.md`](LUNA_MAX_DATA_COLLECTION_RUNBOOK.md)
+
+The Runbook is the single human-readable work entry point. Machine-readable record validity remains defined by the JSON Schemas under `collector-contract/`.
+
 ## Status
 
 This repository is in the bootstrap stage. It defines the storage contract, validation boundary, and repository layout for future polling. It does not yet contain production polling data or an approved collector.
