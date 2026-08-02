@@ -18,9 +18,11 @@ from pathlib import Path
 BASE_URL = "https://minecraft.jp"
 TARGETS = {
     "robots": "/robots.txt",
-    "score": "/servers/score",
-    "player": "/servers/player",
-    "recent": "/servers/recent",
+    "terms": "/terms",
+    "score_page_1": "/servers/score",
+    "score_page_2": "/servers/score/page:2",
+    "player_page_1": "/servers/player",
+    "recent_page_1": "/servers/recent",
 }
 USER_AGENT = (
     "Project-Wayfarer-Research-Trial/1.0 "
