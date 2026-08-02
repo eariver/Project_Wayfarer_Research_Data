@@ -4,21 +4,27 @@ on:
   pull_request:
     paths:
       - ".github/workflows/manual-expanded-ranking-trial.yml"
+      - "LUNA_MAX_DATA_COLLECTION_RUNBOOK.md"
       - "config/trials/manual-expanded-rankings-2026-08-02.json"
       - "docs/source-access/minecraft-jp-2026-08-02.md"
       - "requirements-collector.txt"
       - "requirements-dev.txt"
       - "tools/collect_minecraft_jp_rankings.py"
       - "tools/aggregate_rankings.py"
+      - "tools/validate_raw.py"
       - "tests/test_collect_minecraft_jp_rankings.py"
+      - "tests/test_validate_raw.py"
   push:
     branches:
       - main
     paths:
       - ".github/workflows/manual-expanded-ranking-trial.yml"
+      - "LUNA_MAX_DATA_COLLECTION_RUNBOOK.md"
       - "config/trials/manual-expanded-rankings-2026-08-02.json"
+      - "docs/source-access/minecraft-jp-2026-08-02.md"
       - "requirements-collector.txt"
       - "tools/collect_minecraft_jp_rankings.py"
+      - "tools/validate_raw.py"
   workflow_dispatch:
 
 permissions:
