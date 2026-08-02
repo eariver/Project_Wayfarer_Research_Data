@@ -60,7 +60,7 @@
           },
           "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
           "record_type": {
-            "enum": ["server_ping", "minecraft_jp_ranking", "run_manifest"]
+            "enum": ["server_ping", "minecraft_jp_ranking"]
           },
           "record_count": {"type": "integer", "minimum": 0}
         }
