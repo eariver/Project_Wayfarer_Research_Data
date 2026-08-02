@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/eariver/Project_Wayfarer_Research_Data/main/collector-contract/server-ping-record.schema.json",
+  "title": "Project Wayfarer server ping record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "run_id",
+    "scheduled_at",
+    "observed_at",
+    "server_id",
+    "endpoint",
+    "source",
+    "result",
+    "online_players",
+    "max_players",
+    "latency_ms",
+    "version_name",
+    "protocol_version",
+    "motd_sha256",
+    "failure",
+    "collector"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "record_type": {"const": "server_ping"},
+    "run_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "scheduled_at": {"type": "string", "format": "date-time"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "server_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "port"],
+      "properties": {
+        "host": {"type": "string", "minLength": 1, "maxLength": 253},
+        "port": {"type": "integer", "minimum": 1, "maximum": 65535}
+      }
+    },
+    "source": {"const": "direct_server_list_ping"},
+    "result": {"enum": ["success", "failure"]},
+    "online_players": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "null"}
+      ]
+    },
+    "max_players": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "null"}
+      ]
+    },
+    "latency_ms": {
+      "oneOf": [
+        {"type": "number", "minimum": 0},
+        {"type": "null"}
+      ]
+    },
+    "version_name": {
+      "oneOf": [
+        {"type": "string", "maxLength": 256},
+        {"type": "null"}
+      ]
+    },
+    "protocol_version": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "null"}
+      ]
+    },
+    "motd_sha256": {
+      "oneOf": [
+        {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        {"type": "null"}
+      ]
+    },
+    "failure": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "message"],
+          "properties": {
+            "kind": {
+              "enum": [
+                "timeout",
+                "dns",
+                "connection_refused",
+                "protocol",
+                "tls",
+                "rate_limited",
+                "unexpected"
+              ]
+            },
+            "message": {"type": "string", "minLength": 1, "maxLength": 1024}
+          }
+        }
+      ]
+    },
+    "collector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 128},
+        "version": {"type": "string", "minLength": 1, "maxLength": 64}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"result": {"const": "success"}}},
+      "then": {
+        "properties": {
+          "online_players": {"type": "integer", "minimum": 0},
+          "max_players": {"type": "integer", "minimum": 0},
+          "latency_ms": {"type": "number", "minimum": 0},
+          "failure": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"result": {"const": "failure"}}},
+      "then": {
+        "properties": {
+          "online_players": {"type": "null"},
+          "max_players": {"type": "null"},
+          "latency_ms": {"type": "null"},
+          "version_name": {"type": "null"},
+          "protocol_version": {"type": "null"},
+          "motd_sha256": {"type": "null"},
+          "failure": {"type": "object"}
+        }
+      }
+    }
+  ]
+}

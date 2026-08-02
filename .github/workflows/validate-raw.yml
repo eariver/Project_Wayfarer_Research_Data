@@ -1,0 +1,79 @@
+name: Validate research data
+
+on:
+  push:
+    paths:
+      - ".github/workflows/validate-raw.yml"
+      - "collector-contract/**"
+      - "samples/**"
+      - "raw/**"
+      - "tests/**"
+      - "tools/validate_raw.py"
+      - "requirements-dev.txt"
+  pull_request:
+    paths:
+      - ".github/workflows/validate-raw.yml"
+      - "collector-contract/**"
+      - "samples/**"
+      - "raw/**"
+      - "tests/**"
+      - "tools/validate_raw.py"
+      - "requirements-dev.txt"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Run validator unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Validate schemas, samples, and raw data
+        run: python tools/validate_raw.py --paths samples raw
+
+      - name: Reject modifications or deletions of immutable raw records
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git fetch origin "$BASE_REF" --depth=1
+            diff_range="origin/$BASE_REF...HEAD"
+          else
+            if [[ "$BEFORE_SHA" =~ ^0+$ ]]; then
+              echo "No previous commit is available; skipping immutable-history comparison."
+              exit 0
+            fi
+            diff_range="$BEFORE_SHA..HEAD"
+          fi
+
+          violations="$(
+            git diff --name-status "$diff_range" -- \
+              raw/polling/ raw/rankings/ raw/manifests/ \
+              | awk '$1 != "A" { print }'
+          )"
+
+          if [[ -n "$violations" ]]; then
+            echo "Raw observations are append-only. Only newly added files are allowed:" >&2
+            echo "$violations" >&2
+            exit 1
+          fi

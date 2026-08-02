@@ -1,0 +1,34 @@
+schema_version: "1.0.0"
+phase: bootstrap
+timezone: Asia/Tokyo
+
+schedule:
+  server_list_ping:
+    frequency: hourly
+    minute: 7
+  minecraft_jp_player_ranking:
+    hours: [0, 6, 12, 18]
+    minute: 17
+  minecraft_jp_score_snapshot:
+    frequency: daily
+    hour: 20
+    minute: 17
+
+sources:
+  minecraft_jp:
+    enabled: false
+    base_url: https://minecraft.jp
+
+servers:
+  - server_id: example-network-primary
+    display_name: Example Server
+    endpoint:
+      host: mc.example.invalid
+      port: 25565
+    selection_sources:
+      - score_top_30
+    enabled: false
+
+notes:
+  - This file is synthetic and must not be used as a production polling panel.
+  - Phase A configuration requires separate review and approval.

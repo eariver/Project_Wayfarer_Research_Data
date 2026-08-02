@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local tooling
+.DS_Store
+.idea/
+.vscode/
+
+# Local collector experiments
+.local-data/
+.local-secrets/
+.env
+.env.*
