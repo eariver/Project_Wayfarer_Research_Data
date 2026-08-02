@@ -1,0 +1,35 @@
+name: Probe minecraft.jp structure
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/probe-minecraft-jp.yml"
+      - "tools/probe_minecraft_jp.py"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Fetch public pages with bounded low-load requests
+        run: python tools/probe_minecraft_jp.py
+
+      - name: Upload probe output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: minecraft-jp-structure-probe
+          path: probe-output/
+          if-no-files-found: error
+          retention-days: 3
