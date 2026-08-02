@@ -10,18 +10,24 @@ from pathlib import Path
 from tools.collect_minecraft_jp_rankings import CollectionError, collect, parse_ranking_html
 
 
-def ranking_html(start_rank: int, count: int, prefix: str = "server") -> bytes:
+def ranking_html(
+    start_rank: int,
+    count: int,
+    prefix: str = "server",
+    first_maximum: int = 100,
+) -> bytes:
     rows = []
     for offset in range(count):
         rank = start_rank + offset
         online = 0 if rank == start_rank else rank
+        maximum = first_maximum if offset == 0 else 100
         rows.append(
             f"""
             <tr class="row-info">
               <td class="rank"><span>#{rank}</span></td>
               <td class="name"><span class="label">1.21.{rank}</span><a href="/servers/{prefix}-{rank}">{prefix} {rank}</a></td>
               <td class="address">{prefix}-{rank}.example</td>
-              <td class="players">{online}<span class="muted"> / 100</span></td>
+              <td class="players">{online}<span class="muted"> / {maximum}</span></td>
               <td class="uptime"><div class="bar">99%</div></td>
               <td class="score">{1000-rank}.5</td>
               <td class="vote">{rank:,}</td>
@@ -60,6 +66,18 @@ class RankingCollectorTests(unittest.TestCase):
         self.assertIsNone(records[0]["server_id"])
         self.assertEqual(records[0]["tags"], ["サバイバル", "経済"])
         self.assertEqual(records[1]["rank"], 2)
+
+    def test_parser_preserves_listed_capacity_anomaly(self) -> None:
+        html = ranking_html(1, 1, first_maximum=0).replace(b">0<span", b">65<span")
+        records = parse_ranking_html(
+            html,
+            "player",
+            "2026-08-02T20:17:00+09:00",
+            "11111111-1111-4111-8111-111111111111",
+            {"name": "test", "version": "1.0.0"},
+        )
+        self.assertEqual(records[0]["players_online"], 65)
+        self.assertEqual(records[0]["players_max"], 0)
 
     def test_collects_three_rankings_and_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
