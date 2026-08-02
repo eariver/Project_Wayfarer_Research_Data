@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "run_manifest",
+  "run_id": "11111111-1111-4111-8111-111111111111",
+  "phase": "bootstrap",
+  "run_type": "mixed",
+  "scheduled_at": "2026-08-02T19:07:00+09:00",
+  "started_at": "2026-08-02T19:07:01+09:00",
+  "finished_at": "2026-08-02T19:17:03+09:00",
+  "status": "partial",
+  "expected_targets": 3,
+  "attempted_targets": 3,
+  "successful_targets": 2,
+  "failed_targets": 1,
+  "files": [
+    {
+      "path": "samples/server-ping-records.jsonl",
+      "sha256": "a9467b3d5dc164bba1048aa628e040933788c88331d380745c46b52d1ca5f234",
+      "record_type": "server_ping",
+      "record_count": 2
+    },
+    {
+      "path": "samples/minecraft-jp-ranking-records.jsonl",
+      "sha256": "3fcf9c1a8dfb4d1a12015831e7505e63262921936fbd12168053be66357dabd1",
+      "record_type": "minecraft_jp_ranking",
+      "record_count": 1
+    }
+  ],
+  "collector": {
+    "name": "wayfarer-research-collector",
+    "version": "0.0.0-bootstrap",
+    "execution_environment": "documentation sample"
+  },
+  "notes": "Synthetic non-production sample data."
+}
