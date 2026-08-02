@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "trial_id": "manual-expanded-rankings-2026-08-02",
+  "status": "approved_once",
+  "authorized_by": "repository-owner",
+  "authorization_context": "One-time unscheduled expanded collection requested in Project Wayfarer planning chat",
+  "run_id": "45ec07fb-f779-46e0-aea4-123dbca9243a",
+  "phase": "manual",
+  "scheduled": false,
+  "scheduled_at": "2026-08-02T20:17:00+09:00",
+  "direct_server_ping": false,
+  "collector": {
+    "name": "github-actions-manual-minecraft-jp-ranking-collector",
+    "version": "1.0.0-trial",
+    "execution_environment": "GitHub-hosted Actions runner; sequential public HTTPS retrieval"
+  },
+  "request_policy": {
+    "user_agent": "Project-Wayfarer-Research-Trial/1.0 (+https://github.com/eariver/Project_Wayfarer_Research_Data)",
+    "timeout_seconds": 30,
+    "max_response_bytes": 10485760,
+    "delay_seconds": 2.0,
+    "retries": 1
+  },
+  "preflight": {
+    "robots": {
+      "url": "https://minecraft.jp/robots.txt",
+      "expected_sha256": "8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b"
+    },
+    "terms": {
+      "url": "https://minecraft.jp/terms",
+      "expected_sha256": "47ce5369286fbda035c3da289b76829c55f02847dcd22859c7b18c83d4cd2894"
+    }
+  },
+  "rankings": [
+    {
+      "ranking_type": "score",
+      "expected_count": 30,
+      "pages": [
+        {
+          "url": "https://minecraft.jp/servers/score",
+          "take": 20
+        },
+        {
+          "url": "https://minecraft.jp/servers/score/page:2",
+          "take": 10
+        }
+      ]
+    },
+    {
+      "ranking_type": "player",
+      "expected_count": 20,
+      "pages": [
+        {
+          "url": "https://minecraft.jp/servers/player",
+          "take": 20
+        }
+      ]
+    },
+    {
+      "ranking_type": "recent",
+      "expected_count": 20,
+      "pages": [
+        {
+          "url": "https://minecraft.jp/servers/recent",
+          "take": 20
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This configuration authorizes exactly one run ID and is idempotent after that run is present.",
+    "The trial performs six sequential requests: robots, terms, two Score pages, one Player page, and one Recent page.",
+    "No direct Minecraft Server List Ping is authorized in this trial.",
+    "The general terms contain an analysis/reverse-engineering prohibition whose application to public ranking extraction is not resolved; recurring automated collection remains blocked.",
+    "No theme classification or human interpretation is performed by the collector."
+  ]
+}
