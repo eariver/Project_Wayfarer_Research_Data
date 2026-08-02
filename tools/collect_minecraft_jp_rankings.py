@@ -355,10 +355,6 @@ def collect(
     for ranking_type, records in records_by_type.items():
         for position, record in enumerate(records, start=1):
             validate_object(ranking_validator, record, f"{ranking_type} record {position}")
-            if record["players_online"] > record["players_max"]:
-                raise CollectionError(
-                    f"{ranking_type} rank {record['rank']}: players_online exceeds players_max"
-                )
 
     date_path = started_at.strftime("%Y/%m/%d")
     filename_timestamp = format_filename_timestamp(started_at)
