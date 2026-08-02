@@ -20,6 +20,12 @@ SCHEMA_FILES = {
     "run_manifest": "run-manifest.schema.json",
 }
 
+RAW_RECORD_DIRECTORIES = {
+    "server_ping": "polling",
+    "minecraft_jp_ranking": "rankings",
+    "run_manifest": "manifests",
+}
+
 
 class RepositoryValidationError(Exception):
     """Raised when repository data violates a contract or invariant."""
@@ -114,6 +120,31 @@ def format_schema_errors(
     return messages
 
 
+def validate_record_location(
+    root: Path,
+    path: Path,
+    line_number: int,
+    record_type: str,
+) -> None:
+    relative = path.resolve().relative_to(root.resolve())
+    if not relative.parts or relative.parts[0] != "raw":
+        return
+
+    expected_directory = RAW_RECORD_DIRECTORIES[record_type]
+    if len(relative.parts) < 3 or relative.parts[1] != expected_directory:
+        raise RepositoryValidationError(
+            f"{path}:{line_number}: {record_type} records under raw/ must be stored "
+            f"under raw/{expected_directory}/"
+        )
+
+    expected_suffix = ".json" if record_type == "run_manifest" else ".jsonl"
+    if path.suffix != expected_suffix:
+        raise RepositoryValidationError(
+            f"{path}:{line_number}: {record_type} records under raw/ must use "
+            f"{expected_suffix} files"
+        )
+
+
 def validate_cross_field_invariants(
     path: Path,
     line_number: int,
@@ -126,6 +157,14 @@ def validate_cross_field_invariants(
         if isinstance(online, int) and isinstance(maximum, int) and online > maximum:
             raise RepositoryValidationError(
                 f"{path}:{line_number}: online_players ({online}) exceeds max_players ({maximum})"
+            )
+
+    if record_type == "minecraft_jp_ranking":
+        online = record.get("players_online")
+        maximum = record.get("players_max")
+        if isinstance(online, int) and isinstance(maximum, int) and online > maximum:
+            raise RepositoryValidationError(
+                f"{path}:{line_number}: players_online ({online}) exceeds players_max ({maximum})"
             )
 
     if record_type == "run_manifest":
@@ -143,6 +182,12 @@ def validate_cross_field_invariants(
                     f"{path}:{line_number}: attempted_targets must not exceed expected_targets"
                 )
 
+        file_paths = [entry.get("path") for entry in record.get("files", [])]
+        if len(file_paths) != len(set(file_paths)):
+            raise RepositoryValidationError(
+                f"{path}:{line_number}: manifest file paths must be unique"
+            )
+
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
@@ -156,17 +201,42 @@ def count_records(path: Path) -> int:
     return sum(1 for _ in iter_json_records(path))
 
 
+def resolve_manifest_path(root: Path, manifest_path: Path, path_text: str) -> Path:
+    relative_path = Path(path_text)
+    if relative_path.is_absolute() or ".." in relative_path.parts:
+        raise RepositoryValidationError(
+            f"{manifest_path}: manifest path must remain inside the repository: {path_text}"
+        )
+
+    resolved_root = root.resolve()
+    resolved_path = (resolved_root / relative_path).resolve()
+    if not resolved_path.is_relative_to(resolved_root):
+        raise RepositoryValidationError(
+            f"{manifest_path}: manifest path escapes the repository: {path_text}"
+        )
+    return resolved_path
+
+
 def validate_manifest_references(
     root: Path,
     manifests: list[tuple[Path, int, dict[str, Any]]],
+    data_files: list[Path],
 ) -> None:
     manifests_by_run: dict[str, list[Path]] = defaultdict(list)
+    reference_owners: dict[Path, list[Path]] = defaultdict(list)
+
     for manifest_path, line_number, manifest in manifests:
         run_id = manifest["run_id"]
         manifests_by_run[run_id].append(manifest_path)
 
         for file_entry in manifest["files"]:
-            referenced_path = root / file_entry["path"]
+            referenced_path = resolve_manifest_path(
+                root,
+                manifest_path,
+                file_entry["path"],
+            )
+            reference_owners[referenced_path].append(manifest_path)
+
             if not referenced_path.is_file():
                 raise RepositoryValidationError(
                     f"{manifest_path}:{line_number}: referenced file does not exist: {file_entry['path']}"
@@ -196,15 +266,41 @@ def validate_manifest_references(
                         f"{referenced_path}:{referenced_line}: run_id does not match manifest"
                     )
 
-    duplicates = {
+    duplicate_manifests = {
         run_id: paths for run_id, paths in manifests_by_run.items() if len(paths) > 1
     }
-    if duplicates:
+    if duplicate_manifests:
         rendered = "; ".join(
             f"{run_id}: {', '.join(str(path) for path in paths)}"
-            for run_id, paths in sorted(duplicates.items())
+            for run_id, paths in sorted(duplicate_manifests.items())
         )
-        raise RepositoryValidationError(f"multiple manifests found for the same run_id: {rendered}")
+        raise RepositoryValidationError(
+            f"multiple manifests found for the same run_id: {rendered}"
+        )
+
+    multiply_referenced = {
+        path: owners for path, owners in reference_owners.items() if len(owners) > 1
+    }
+    if multiply_referenced:
+        rendered = "; ".join(
+            f"{path}: {', '.join(str(owner) for owner in owners)}"
+            for path, owners in sorted(multiply_referenced.items(), key=lambda item: str(item[0]))
+        )
+        raise RepositoryValidationError(
+            f"data files referenced by multiple manifest entries: {rendered}"
+        )
+
+    for data_path in data_files:
+        relative = data_path.resolve().relative_to(root.resolve())
+        is_raw_observation = (
+            len(relative.parts) >= 2
+            and relative.parts[0] == "raw"
+            and relative.parts[1] in {"polling", "rankings"}
+        )
+        if is_raw_observation and data_path.resolve() not in reference_owners:
+            raise RepositoryValidationError(
+                f"{data_path}: production raw observation is not referenced by a manifest"
+            )
 
 
 def validate_repository(root: Path, requested_paths: list[str]) -> tuple[int, int]:
@@ -212,6 +308,7 @@ def validate_repository(root: Path, requested_paths: list[str]) -> tuple[int, in
     files = discover_data_files(root, requested_paths)
     records_validated = 0
     manifests: list[tuple[Path, int, dict[str, Any]]] = []
+    raw_manifest_counts: dict[Path, int] = defaultdict(int)
 
     for path in files:
         for line_number, record in iter_json_records(path):
@@ -229,12 +326,22 @@ def validate_repository(root: Path, requested_paths: list[str]) -> tuple[int, in
                     f"{path}:{line_number}: schema validation failed:\n  - {joined}"
                 )
 
+            validate_record_location(root, path, line_number, record_type)
             validate_cross_field_invariants(path, line_number, record)
             if record_type == "run_manifest":
                 manifests.append((path, line_number, record))
+                relative = path.resolve().relative_to(root.resolve())
+                if len(relative.parts) >= 2 and relative.parts[:2] == ("raw", "manifests"):
+                    raw_manifest_counts[path] += 1
             records_validated += 1
 
-    validate_manifest_references(root, manifests)
+    for manifest_path, record_count in raw_manifest_counts.items():
+        if record_count != 1:
+            raise RepositoryValidationError(
+                f"{manifest_path}: each raw manifest file must contain exactly one record"
+            )
+
+    validate_manifest_references(root, manifests, files)
     return len(files), records_validated
 
 
