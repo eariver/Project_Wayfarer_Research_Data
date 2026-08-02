@@ -7,6 +7,7 @@ on:
       - "collector-contract/**"
       - "samples/**"
       - "raw/**"
+      - "tests/**"
       - "tools/validate_raw.py"
       - "requirements-dev.txt"
   pull_request:
@@ -15,6 +16,7 @@ on:
       - "collector-contract/**"
       - "samples/**"
       - "raw/**"
+      - "tests/**"
       - "tools/validate_raw.py"
       - "requirements-dev.txt"
 
@@ -40,18 +42,35 @@ jobs:
       - name: Install validation dependencies
         run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
 
+      - name: Run validator unit tests
+        run: python -m unittest discover -s tests -v
+
       - name: Validate schemas, samples, and raw data
         run: python tools/validate_raw.py --paths samples raw
 
       - name: Reject modifications or deletions of immutable raw records
-        if: github.event_name == 'pull_request'
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref }}
+          BEFORE_SHA: ${{ github.event.before }}
         run: |
-          git fetch origin "${{ github.base_ref }}" --depth=1
-          violations="$({
-            git diff --name-status "origin/${{ github.base_ref }}...HEAD" -- \
-              raw/polling/ raw/rankings/ raw/manifests/
-          } | awk '$1 != "A" { print }')"
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git fetch origin "$BASE_REF" --depth=1
+            diff_range="origin/$BASE_REF...HEAD"
+          else
+            if [[ "$BEFORE_SHA" =~ ^0+$ ]]; then
+              echo "No previous commit is available; skipping immutable-history comparison."
+              exit 0
+            fi
+            diff_range="$BEFORE_SHA..HEAD"
+          fi
+
+          violations="$(
+            git diff --name-status "$diff_range" -- \
+              raw/polling/ raw/rankings/ raw/manifests/ \
+              | awk '$1 != "A" { print }'
+          )"
 
           if [[ -n "$violations" ]]; then
             echo "Raw observations are append-only. Only newly added files are allowed:" >&2
