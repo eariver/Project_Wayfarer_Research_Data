@@ -4,7 +4,7 @@ Public raw and derived data for Minecraft server market research supporting [Pro
 
 ## Luna Max entry point
 
-Luna Max must start collector implementation and scheduled acquisition work from:
+Luna Max must start any future collector or data-acquisition work from:
 
 - [`LUNA_MAX_DATA_COLLECTION_RUNBOOK.md`](LUNA_MAX_DATA_COLLECTION_RUNBOOK.md)
 
@@ -12,64 +12,73 @@ The Runbook is the single human-readable work entry point. Machine-readable reco
 
 ## Status
 
-This repository is in the bootstrap stage. It defines the storage contract, validation boundary, and repository layout for future polling. It does not yet contain production polling data or an approved collector.
+**On hold.** The one-time expanded minecraft.jp ranking trial completed successfully on 2026-08-02.
 
-The governing research direction is reviewed in Project Wayfarer. This repository implements only reproducible data storage and mechanical processing.
+- Score ranking: 30 records
+- Player ranking: 20 records
+- Recent ranking: 20 records
+- Total: 70 successful records, 0 failures
+- Run ID: `45ec07fb-f779-46e0-aea4-123dbca9243a`
+
+No scheduled or recurring collection is active or authorized. Future checks are expected to be irregular and require a new explicit authorization, Config, Run ID, source review, and reviewed execution path.
+
+The completed execution workflow is archived under `archive/workflows/` and cannot run from that location. Existing Raw and Derived data, Schemas, Collector code, tests, and aggregation tools remain available for reuse.
 
 ## Responsibility boundary
 
 | Component | Responsibility |
 | --- | --- |
-| Luna Max scheduled execution | Collect observations, create immutable raw files and run manifests, then commit and push them here |
-| GitHub Actions | Validate schemas and mechanically derive reproducible aggregates |
-| Human analysis | Decide anomaly handling, classify themes, interpret market changes, and update Project Wayfarer concepts |
+| Collector operator or Luna Max | For an explicitly approved run, collect observations, create immutable Raw files and one Manifest, validate, then commit and push |
+| GitHub Actions | Validate Schemas and mechanically derive reproducible aggregates |
+| Human analysis | Decide anomaly handling, Stable IDs, theme classification, market interpretation, and Project Wayfarer changes |
 
-Automated processing must not infer missing values, classify server themes, declare a server successful or failed, or rewrite historical raw observations.
+Automated processing must not infer missing values, classify themes, declare a server successful or failed, or rewrite historical Raw observations.
 
 ## Data principles
 
 - This repository remains public.
 - Raw observations are append-only and immutable.
 - `0 players`, acquisition failure, unknown, and not checked are distinct states.
-- Every scheduled or manual acquisition has a unique `run_id`.
+- Every acquisition has a unique `run_id`.
 - Timestamps use ISO 8601 with an explicit UTC offset.
-- Server and network records use stable identifiers rather than display names as keys.
-- Derived data must be reproducible from raw data and versioned processing code.
-- Corrections are additive records; raw files are not edited in place.
+- Stable identifiers require human-approved configuration or registry entries.
+- Derived data must be reproducible from Raw data and versioned processing code.
+- Corrections are additive records; Raw files are not edited in place.
 - Non-public Discord content and other authenticated community information are outside the research scope.
+- A completed Trial Config is a historical record and does not authorize reuse.
 
-## Planned layout
+## Repository layout
 
 ```text
-.github/workflows/       Raw validation and later aggregation workflows
+.github/workflows/       Active validation and aggregation workflows only
+archive/workflows/       Inactive completed workflow references
 collector-contract/      JSON Schemas and collector-facing contracts
-config/                  Version-controlled polling and source configuration
+config/                  Version-controlled source and Trial configuration
 raw/                     Immutable collector output
 derived/                 Reproducible machine-generated aggregates
 corrections/             Additive correction records
 samples/                 Non-production example data
-tools/                   Validation and aggregation programs
+tools/                   Validation, collection, and aggregation programs
+tests/                   Validator and Collector tests
+docs/                    Source-access and research records
 ```
 
-## Bootstrap scope
+## Completed Trial records
 
-The first foundation change provides:
+```text
+config/trials/manual-expanded-rankings-2026-08-02.json
+raw/manifests/2026/08/02/2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.json
+docs/source-access/minecraft-jp-2026-08-02.md
+derived/ranking-snapshots/2026/08/02/
+```
 
-- collector contracts for server ping, minecraft.jp ranking, and run manifest records;
-- sample records that are explicitly outside `raw/`;
-- a Python validator;
-- a GitHub Actions workflow that validates contracts, samples, and future raw data;
-- directory-level rules for raw, derived, and correction data.
+Relevant commits:
 
-It intentionally does not provide:
-
-- a Minecraft Server List Ping collector;
-- minecraft.jp scraping or polling logic;
-- credentials or scheduled Luna Max execution;
-- production polling panel entries;
-- daily, calibration, monthly, or quarterly aggregation logic.
-
-Those require separate implementation review.
+```text
+Collector and workflow: 13ff34080fc3f4655bd4f1a9e1d9e71fc6b82f95
+Raw observations:       aef22a80dfaafc723c8f07b6c00e07a0a0ce82b1
+Derived aggregation:    774d4cf5c47311089abd746d73293f0194fe3341
+```
 
 ## Licensing
 
