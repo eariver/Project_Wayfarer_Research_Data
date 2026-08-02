@@ -37,6 +37,14 @@ Observed normalized `#content` text SHA-256:
 eaf7f25eb6b95c2fa4804d73057f8ced6df6c6478846490817bc6231522fc041
 ```
 
+## Listed-value anomaly policy
+
+During the Live dry run, Player ranking rank 6 displayed `65 / 0`. This is a source-listed value, not a direct Server List Ping result.
+
+Ranking snapshots preserve `players_online` and `players_max` independently, even when the listed online value exceeds the listed maximum. The Collector must not clamp, infer, replace, or discard either value. Human analysis may later interpret the anomaly.
+
+Direct Server List Ping records remain subject to the invariant that a successful response must not report `online_players > max_players`.
+
 ## Trial decision
 
 The repository owner explicitly authorized one unscheduled trial. The trial is restricted to:
