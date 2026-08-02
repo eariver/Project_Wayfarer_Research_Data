@@ -159,13 +159,10 @@ def validate_cross_field_invariants(
                 f"{path}:{line_number}: online_players ({online}) exceeds max_players ({maximum})"
             )
 
-    if record_type == "minecraft_jp_ranking":
-        online = record.get("players_online")
-        maximum = record.get("players_max")
-        if isinstance(online, int) and isinstance(maximum, int) and online > maximum:
-            raise RepositoryValidationError(
-                f"{path}:{line_number}: players_online ({online}) exceeds players_max ({maximum})"
-            )
+    # minecraft.jp ranking records preserve the values displayed by the source.
+    # A proxy or server may advertise max_players=0 or another value below the
+    # displayed online count. That source anomaly is not a collector failure and
+    # must not be corrected, clamped, or discarded by mechanical validation.
 
     if record_type == "run_manifest":
         expected = record.get("expected_targets")
