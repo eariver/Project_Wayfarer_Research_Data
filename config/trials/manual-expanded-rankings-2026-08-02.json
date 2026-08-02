@@ -1,13 +1,17 @@
 {
   "schema_version": "1.0.0",
   "trial_id": "manual-expanded-rankings-2026-08-02",
-  "status": "approved_once",
+  "status": "completed",
   "authorized_by": "repository-owner",
   "authorization_context": "One-time unscheduled expanded collection requested in Project Wayfarer planning chat",
   "run_id": "45ec07fb-f779-46e0-aea4-123dbca9243a",
   "phase": "manual",
   "scheduled": false,
   "scheduled_at": "2026-08-02T20:17:00+09:00",
+  "completed_at": "2026-08-02T20:48:13+09:00",
+  "result_manifest": "raw/manifests/2026/08/02/2026-08-02T20-48-05+09-00_45ec07fb-f779-46e0-aea4-123dbca9243a.json",
+  "raw_commit": "aef22a80dfaafc723c8f07b6c00e07a0a0ce82b1",
+  "derived_commit": "774d4cf5c47311089abd746d73293f0194fe3341",
   "direct_server_ping": false,
   "collector": {
     "name": "github-actions-manual-minecraft-jp-ranking-collector",
@@ -70,12 +74,20 @@
       ]
     }
   ],
+  "result": {
+    "expected_targets": 70,
+    "attempted_targets": 70,
+    "successful_targets": 70,
+    "failed_targets": 0
+  },
   "notes": [
-    "This configuration authorizes exactly one run ID and is idempotent after that run is present.",
-    "The trial performs six sequential requests: robots, terms, two Score pages, one Player page, and one Recent page.",
-    "No direct Minecraft Server List Ping is authorized in this trial.",
-    "The general terms contain an analysis/reverse-engineering prohibition whose application to public ranking extraction is not resolved; recurring automated collection remains blocked.",
-    "The terms preflight hashes normalized text under #content so Cloudflare nonces and protected-email tokens do not create false changes.",
-    "No theme classification or human interpretation is performed by the collector."
+    "This one-time authorization has been consumed and must not be reused.",
+    "Any future collection requires a new reviewed configuration, a new Run ID, and explicit owner authorization.",
+    "The active trial workflow was archived outside .github/workflows after completion.",
+    "No direct Minecraft Server List Ping was performed in this trial.",
+    "Recurring automated collection remains unapproved; future checks are expected to be irregular and explicitly requested.",
+    "The general terms contain an analysis/reverse-engineering prohibition whose application to public ranking extraction is not resolved.",
+    "The terms preflight hashed normalized text under #content so Cloudflare nonces and protected-email tokens did not create false changes.",
+    "No theme classification or human interpretation was performed by the collector."
   ]
 }

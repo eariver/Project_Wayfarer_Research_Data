@@ -1,3 +1,7 @@
+# Archived workflow from the completed 2026-08-02 expanded ranking trial.
+# This file is intentionally outside .github/workflows and cannot execute.
+# Reuse requires a new reviewed workflow, explicit authorization, and a new Run ID.
+
 name: Manual expanded ranking trial
 
 on:
