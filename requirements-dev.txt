@@ -1,1 +1,2 @@
+-r requirements-collector.txt
 jsonschema[format]>=4.23,<5

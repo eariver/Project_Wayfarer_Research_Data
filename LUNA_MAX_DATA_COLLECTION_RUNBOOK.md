@@ -2,7 +2,7 @@
 
 **Repository:** `eariver/Project_Wayfarer_Research_Data`  
 **Role:** Single human-readable entry point for collector implementation and scheduled data acquisition  
-**Status:** Bootstrap contract; production polling is not yet authorized  
+**Status:** Bootstrap contract; recurring production polling is not authorized; one fixed expanded ranking trial is authorized  
 **Last updated:** 2026-08-02
 
 > [!IMPORTANT]
@@ -34,7 +34,7 @@ Use the following precedence when implementing or operating the collector:
 
 ## 3. Current authorization state
 
-The repository currently authorizes only foundation and implementation work.
+The repository currently authorizes foundation and implementation work plus the single fixed exception below.
 
 ### Authorized
 
@@ -44,16 +44,46 @@ The repository currently authorizes only foundation and implementation work.
 - Running synthetic, fixture-based, or explicitly approved dry runs outside `raw/`.
 - Preparing a production polling panel for review.
 
+### One-time expanded ranking trial exception
+
+The repository owner explicitly authorizes exactly one unscheduled real-data trial defined by:
+
+```text
+config/trials/manual-expanded-rankings-2026-08-02.json
+```
+
+The exception is valid only when all of the following remain true:
+
+- Run ID is exactly `45ec07fb-f779-46e0-aea4-123dbca9243a`.
+- Scope is exactly Score ranks 1–30, Player ranks 1–20, and Recent ranks 1–20.
+- Source access is limited to the six public HTTPS requests recorded in the approved Config and source-access review.
+- Requests are sequential, use the approved repository-identifying User-Agent, wait at least two seconds, use bounded timeout and retry, and respect the response-size limit.
+- No direct Minecraft Server List Ping is performed.
+- No authenticated, private, Discord-member-only, or in-game information is accessed.
+- The reviewed source-access record remains:
+
+```text
+docs/source-access/minecraft-jp-2026-08-02.md
+```
+
+- The robots Raw hash and normalized terms-body hash match the approved Config.
+- A Pull Request dry run successfully creates 70 records, validates the three Raw files and one Manifest, and generates three Derived summaries without writing to repository `raw/`.
+- The collector and workflow are reviewed and merged before the real-data execution starts.
+- The real execution is idempotent: if the fixed Run ID already has a Manifest, it performs no network collection and adds no files.
+- Raw and Derived outputs are committed only by the reviewed GitHub Actions workflow.
+
+This exception expires immediately after a Manifest with the fixed Run ID exists under `raw/manifests/`. It does not authorize a retry with a different Run ID, scheduled execution, recurring collection, a broader ranking range, direct Server List Ping, or Phase A/B/C collection.
+
 ### Not yet authorized
 
-- Production polling of real servers.
-- Automated access to minecraft.jp.
+- Recurring production polling of real servers.
+- Automated access to minecraft.jp outside the fixed one-time exception above.
 - Scheduled Luna Max execution using production credentials.
-- Writing real observations under `raw/`.
+- Writing other real observations under `raw/`.
 - Selecting a Phase A start date.
 - Selecting permanent monthly or quarterly polling times before Phase B calibration.
 
-Production collection may begin only when all stop conditions in Section 16 are cleared.
+Recurring production collection may begin only when all stop conditions in Section 16 are cleared. The fixed one-time exception is governed solely by the stricter conditions listed in this section.
 
 ## 4. Research phases
 
@@ -239,6 +269,8 @@ Never collapse these states:
 
 Use the Schema-defined values. If the Schema cannot represent an observed condition, stop the affected acquisition and propose a contract change.
 
+For source-listed ranking records, preserve `players_online` and `players_max` independently. A public listing may display an online count above its advertised maximum, including a nonzero online count with a listed maximum of zero. Do not clamp, infer, replace, or discard either listed value. This exception applies only to source-listed ranking snapshots; successful direct Server List Ping records remain subject to their cross-field integrity checks.
+
 ### 9.4 Stable IDs
 
 Use the approved stable ID from production configuration or registry. Do not derive a new permanent ID from a display name during a scheduled run.
@@ -293,6 +325,8 @@ data(polling): collect 2026-08-03T19:07+09:00
 18. Push to `main` only after local validation passes and the approved repository policy allows direct collector pushes.
 19. Record the resulting commit SHA.
 20. Check the validation workflow when possible and report its result.
+
+For a fixed one-time trial whose Config already contains an approved Run ID, use that Run ID instead of generating another one in Step 4. The exception must be explicit in Section 3 and the approved Config.
 
 ## 12. Retry and failure policy
 
@@ -375,7 +409,9 @@ The implementation must pass the existing validation workflow and any new collec
 
 ## 16. Production start stop conditions
 
-Do not begin real collection until every item below is satisfied:
+The checklist below governs recurring production collection and Phase A/B/C work. It is not waived by the fixed one-time exception in Section 3, and that exception does not count as approval for any later run.
+
+Do not begin recurring real collection until every item below is satisfied:
 
 - [ ] Collector implementation is reviewed and merged.
 - [ ] minecraft.jp terms, robots guidance, rate limits, and acceptable request frequency are checked and documented.
@@ -389,7 +425,7 @@ Do not begin real collection until every item below is satisfied:
 - [ ] Direct collector push policy and branch protection are compatible.
 - [ ] Human owner explicitly authorizes production start.
 
-If any item is incomplete, continue only with implementation, tests, fixtures, or dry-run work.
+If any item is incomplete, continue only with implementation, tests, fixtures, dry-run work, or an exact one-time exception explicitly recorded in Section 3.
 
 ## 17. Calibration aggregation expectations
 
