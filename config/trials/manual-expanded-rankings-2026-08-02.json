@@ -24,11 +24,14 @@
   "preflight": {
     "robots": {
       "url": "https://minecraft.jp/robots.txt",
+      "hash_mode": "raw",
       "expected_sha256": "8fa3036c68bfcbd32365f6225d24333264093b7cd38d306e106b4dbdc934fd5b"
     },
     "terms": {
       "url": "https://minecraft.jp/terms",
-      "expected_sha256": "47ce5369286fbda035c3da289b76829c55f02847dcd22859c7b18c83d4cd2894"
+      "hash_mode": "text_selector",
+      "selector": "#content",
+      "expected_sha256": "eaf7f25eb6b95c2fa4804d73057f8ced6df6c6478846490817bc6231522fc041"
     }
   },
   "rankings": [
@@ -72,6 +75,7 @@
     "The trial performs six sequential requests: robots, terms, two Score pages, one Player page, and one Recent page.",
     "No direct Minecraft Server List Ping is authorized in this trial.",
     "The general terms contain an analysis/reverse-engineering prohibition whose application to public ranking extraction is not resolved; recurring automated collection remains blocked.",
+    "The terms preflight hashes normalized text under #content so Cloudflare nonces and protected-email tokens do not create false changes.",
     "No theme classification or human interpretation is performed by the collector."
   ]
 }
